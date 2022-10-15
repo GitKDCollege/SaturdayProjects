@@ -29,6 +29,53 @@ def validate(mp):
         return mp[0][2]
 
 
+def validate(mp):
+    c = []
+
+    for i in range(3):
+        rw = set()
+        cn = set()
+
+        for j in range(3):
+            rw.add(mp[i][j])
+            cn.add(mp[j][i])
+
+        if len(rw) == 1 and not rw == {' '}:
+            return rw.pop()
+
+        if len(cn) == 1 and not cn == {' '}:
+            return cn.pop()
+
+        c.append(rw)
+        c.append(cn)
+
+    d1 = set((mp[0][0], mp[1][1], mp[2][2]))
+    d2 = set((mp[0][2], mp[1][1], mp[2][0]))
+
+    if len(d1) == 1 and not d1 == {' '}:
+            return d1.pop()
+
+    if len(d2) == 1 and not d2 == {' '}:
+        return d2.pop()
+
+    c.append(d1)
+    c.append(d2)
+
+    for x in c:
+        if ' ' in x:
+            break
+    else:
+        return 0
+
+
+def tostop(mp):
+    for i in range(3):
+        for j in range(3):
+            if mp[i][j] == ' ':
+                return False
+    return True
+
+
 ph = [
     [' ', ' ', ' '],
     [' ', ' ', ' '],
@@ -71,6 +118,17 @@ while 1:
     r = validate(ph)
     if r:
         print("{} wins".format(r))
+        display(ph)
+
+        break
+
+    if r == 0:
+        print("DRAW")
+        display(ph)
+
+        break
+
+    if tostop(ph):
         display(ph)
 
         break
